@@ -10,7 +10,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package)))
+   '(yasnippet-snippets iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -49,11 +49,11 @@
 
 ;; turn on speedbar and open at startup
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(require 'sr-speedbar)
-(setq speedbar-use-images nil)
-(add-hook 'emacs-startup-hook (lambda ()
-  (sr-speedbar-open)
-  ))
+;;(require 'sr-speedbar)
+;;(setq speedbar-use-images nil)
+;;(add-hook 'emacs-startup-hook (lambda ()
+;;  (sr-speedbar-open)
+;;  ))
 
 ;; lisp interpreter
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
@@ -69,3 +69,24 @@
 
 ;; auto save current layout and open next session
 (desktop-save-mode 1)
+
+;; close all buffer
+(defun close-all-buffers ()
+(interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
+;; set tag file
+;; (setq visit-tags-table "location")
+
+;; git
+;; (require 'git)
+
+;; binding for compile
+(global-set-key "\C-x\C-k" 'compile)
+;; default compile command
+(setq compile-command "time cat in | java -Xms10M -Xmx10M Exp.java")
+
+
+;; snippet
+(require 'yasnippet)
+(yas-global-mode 1)
