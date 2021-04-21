@@ -33,7 +33,7 @@
 ;; set default tab char's display width to 4 spaces
 (setq-default c-basic-offset 4
               tab-width 4
-              indent-tabs-mode t
+              indent-tabs-mode nil
               c-default-style "k&r")
 ;; indent commands always use space
 ;; (setq-default indent-tabs-mode nil)
@@ -90,3 +90,31 @@
 ;; snippet
 (require 'yasnippet)
 (yas-global-mode 1)
+
+;; dired 
+;; try to fix error when ls using dired
+(when (string= system-type "darwin")       
+  (setq dired-use-ls-dired nil))
+
+;; compile
+(global-set-key "\C-x\C-k" 'compile)
+;;(add-to-list 'compilation-search-path "/Users/anhtran/Documents/Repo/interconnection/services/ic-transit-network-services")
+
+;; remove maven garbage output
+;; https://github.com/apg/mvn-el
+(ignore-errors
+  (require 'ansi-color)
+  (defun colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (let ((inhibit-read-only t))
+        (if (boundp 'compilation-filter-start)
+            (ansi-color-apply-on-region compilation-filter-start (point))))))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
+
+;; change directory
+(defun in-directory (dir)
+  "Runs execute-extended-command with default-directory set to the given
+directory."
+  (interactive "DIn directory: ")
+  (let ((default-directory dir))
+    (call-interactively 'execute-extended-command)))
